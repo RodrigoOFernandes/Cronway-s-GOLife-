@@ -1,17 +1,18 @@
 use rand::random_bool;
 use clearscreen::clear;
+use std::io::stdin;
 
 #[derive(Clone, Copy)]
 struct Cell {
     alive: bool,
 }
 
-fn create_cells(max: u8) -> Vec<Cell> {
+fn create_cells(max: u8, probability: f64) -> Vec<Cell> {
     let mut cells: Vec<Cell> = Vec::new();
     for _i in 0..max {
         for _j in 0..max {
             let cell = Cell {
-                alive: random_bool(0.2),
+                alive: random_bool(probability),
             };
             cells.push(cell);
         }
@@ -63,8 +64,14 @@ fn survivors(cells: Vec<Cell>, max: u8) -> Vec<Cell> {
 }
 
 fn main() {
-    let max: u8 = 50;
-    let mut cells = create_cells(max);
+    println!("WELCOME TO THE GAME OF LIFE\n");
+    println!("How many percentage of alive cells do you want?(Percentage from 0.0 -> 1.0)");
+    let mut buffer = String::new();
+    let _ = stdin().read_line(&mut buffer);
+
+    let max: u8 = 30;
+    let probability = buffer.trim().parse::<f64>().unwrap();
+    let mut cells = create_cells(max, probability);
 
     loop {
         for (count, cell) in cells.iter().enumerate() {
@@ -72,9 +79,9 @@ fn main() {
                 println!();
             }
             if cell.alive {
-                print!("\x1b[38;2;0;255;0m#\x1b[0m");
+                print!("\x1b[38;2;0;255;0m■\x1b[0m");
             } else {
-                print!("%");
+                print!("□");
             }
         }
         println!();
