@@ -63,7 +63,7 @@ fn survivors(cells: Vec<Cell>, max: u8) -> Vec<Cell> {
 }
 
 fn main() {
-    let max: u8 = 10;
+    let max: u8 = 50;
     let mut cells = create_cells(max);
 
     loop {
