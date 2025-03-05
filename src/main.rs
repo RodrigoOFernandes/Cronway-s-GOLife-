@@ -72,7 +72,7 @@ fn main() {
                 println!();
             }
             if cell.alive {
-                print!("#");
+                print!("\x1b[38;2;0;255;0m#\x1b[0m");
             } else {
                 print!("%");
             }
